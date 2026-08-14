@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://ieeesb-pmec.github.io/-ieee-sb-pmec-website/sitemap.xml
