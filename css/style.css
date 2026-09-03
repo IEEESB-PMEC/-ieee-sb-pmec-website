@@ -1,5 +1,5 @@
 /* ==========================================================================
-   IEEE SB PMEC Student Branch Chapter - Main Stylesheet
+   IEEE SB PMEC Student Branch - Main Stylesheet
    ========================================================================== */
 
 /* 1. Imports & Fonts */
@@ -7,7 +7,7 @@
 
 /* 2. Custom CSS Variables */
 :root {
-  /* Color Palette — Edge-AI Hackathon "circuit board" identity */
+  /* Color Palette â€” Edge-AI Hackathon "circuit board" identity */
   --primary: #0A5FC2;       /* Electric IEEE Blue */
   --primary-rgb: 10, 95, 194;
   --primary-deep: #052a5e;  /* Deep navy PCB base */
@@ -63,7 +63,7 @@
   --border-radius-lg: 24px;
 }
 
-/* Dark Mode Theme Overrides — deep PCB navy from the brochure */
+/* Dark Mode Theme Overrides â€” deep PCB navy from the brochure */
 body.dark-mode {
   --primary: #2E8BE6;        /* brighter electric blue on dark */
   --bg-primary: #061024;     /* Deep circuit navy */
@@ -365,6 +365,7 @@ body.dark-mode .section-bg {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 180px;
 }
 
 .logo-img {
@@ -385,9 +386,10 @@ body.dark-mode .section-bg {
 .brand-name {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--primary);
   line-height: 1.2;
+  letter-spacing: -0.05em;
 }
 
 body.dark-mode .brand-name {
@@ -404,16 +406,19 @@ body.dark-mode .brand-name {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 32px;
+  justify-content: center;
+  gap: clamp(18px, 2vw, 26px);
+  flex: 1;
 }
 
 .nav-link {
   font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 1rem;
   color: var(--text-primary);
   position: relative;
-  padding: 6px 0;
+  padding: 8px 0;
+  white-space: nowrap;
 }
 
 .nav-link::after {
@@ -521,8 +526,8 @@ body.dark-mode .nav-link.active {
    6. Hero Section
    ========================================================================== */
 .hero {
-  min-height: 100vh;
-  padding-top: calc(var(--nav-height) + 40px);
+  min-height: 78vh;
+  padding-top: calc(var(--nav-height) + 24px);
   display: flex;
   align-items: center;
   background: radial-gradient(ellipse at 72% 28%, rgba(var(--secondary-rgb), 0.08) 0%, transparent 55%),
@@ -537,7 +542,7 @@ body.dark-mode .hero {
               radial-gradient(ellipse at 8% 85%, rgba(var(--primary-rgb), 0.16) 0%, transparent 55%);
 }
 
-/* Interactive circuit-board canvas — fixed behind the WHOLE page */
+/* Interactive circuit-board canvas â€” fixed behind the WHOLE page */
 .circuit-canvas {
   position: fixed;
   inset: 0;
@@ -562,10 +567,11 @@ body.dark-mode .hero {
 
 .hero .container {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.18fr 0.82fr;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
   width: 100%;
+  max-width: 1280px;
 }
 
 .hero-content {
@@ -612,10 +618,10 @@ body.dark-mode .hero-subtitle-badge {
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: clamp(3.7rem, 5vw, 7.2rem);
   font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 16px;
+  line-height: 0.94;
+  margin-bottom: 18px;
   letter-spacing: -1px;
 }
 
@@ -637,10 +643,10 @@ body.dark-mode .hero h1 span.chapter-text {
 
 .hero-typing-container {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.35rem;
+  font-size: clamp(1.2rem, 1.8vw, 1.9rem);
   font-weight: 500;
   color: var(--text-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   min-height: 2.2rem;
 }
 
@@ -662,10 +668,11 @@ body.dark-mode .hero-typing-container span.typed-text {
 }
 
 .hero-desc {
-  font-size: 1.15rem;
-  margin-bottom: 40px;
+  font-size: clamp(1.05rem, 1.35vw, 1.5rem);
+  line-height: 1.6;
+  margin-bottom: 36px;
   color: var(--text-secondary);
-  max-width: 580px;
+  max-width: 620px;
 }
 
 .hero-actions {
@@ -685,9 +692,11 @@ body.dark-mode .hero-typing-container span.typed-text {
 
 .hero-logo-wrapper {
   position: relative;
+  width: min(42vw, 470px);
+  aspect-ratio: 1;
   background-color: var(--white);
-  border-radius: 24px;
-  padding: 30px;
+  border-radius: 50%;
+  padding: 28px;
   box-shadow: var(--shadow-lg), 0 0 45px rgba(var(--secondary-rgb), 0.25);
   border: 1px solid var(--card-border);
   animation: float 6s ease-in-out infinite;
@@ -738,8 +747,8 @@ body.dark-mode .hero-logo-wrapper::before {
 }
 
 .hero-logo {
-  max-width: 240px;
-  width: 100%;
+  max-width: 260px;
+  width: 72%;
   height: auto;
 }
 
@@ -935,6 +944,81 @@ body.dark-mode .vision-mission-header svg {
 /* ==========================================================================
    8. Executive Committee
    ========================================================================== */
+.committee-subnav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.subnav-link {
+  padding: 12px 30px;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all var(--transition-normal);
+}
+
+.subnav-link:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.subnav-link.active {
+  background-color: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+}
+
+body.dark-mode .subnav-link:hover {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+body.dark-mode .subnav-link.active {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.committee-subsection {
+  margin-bottom: 60px;
+  padding: 30px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--card-border);
+}
+
+.subsection-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.subsection-header h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.subsection-header p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 .committee-grid {
   display: flex;
   flex-wrap: wrap;
@@ -979,7 +1063,7 @@ body.dark-mode .vision-mission-header svg {
   transition: transform var(--transition-slow);
 }
 
-/* These portraits sit high in frame — focus the crop upward so faces are centred */
+/* These portraits sit high in frame â€” focus the crop upward so faces are centred */
 .member-img[alt="Swadhin Roul"] {
   object-position: center 20%;
 }
@@ -2482,7 +2566,7 @@ body.dark-mode .event-meta i {
 }
 
 /* ==========================================================================
-   FX LAYER — site-wide attractive effects (circuit theme)
+   FX LAYER â€” site-wide attractive effects (circuit theme)
    ========================================================================== */
 
 /* Text selection in brand colors */
@@ -2491,7 +2575,7 @@ body.dark-mode .event-meta i {
   color: var(--text-primary);
 }
 
-/* Custom scrollbar — gradient "data bus" thumb */
+/* Custom scrollbar â€” gradient "data bus" thumb */
 ::-webkit-scrollbar {
   width: 11px;
 }
@@ -2507,13 +2591,13 @@ body.dark-mode .event-meta i {
   background: linear-gradient(180deg, var(--secondary), var(--glow));
 }
 
-/* Nav links — gradient underline with glow */
+/* Nav links â€” gradient underline with glow */
 .nav-link::after {
   background: var(--grad-primary);
   box-shadow: 0 0 10px rgba(var(--secondary-rgb), 0.7);
 }
 
-/* Scroll progress bar — glowing data stream */
+/* Scroll progress bar â€” glowing data stream */
 .scroll-progress {
   background: linear-gradient(to right, var(--primary), var(--secondary), var(--glow));
   box-shadow: 0 0 12px rgba(var(--glow-rgb), 0.8);
@@ -2566,7 +2650,7 @@ body.dark-mode .fx-spotlight::after {
               rgba(var(--glow-rgb), 0.12), transparent 65%);
 }
 
-/* Gallery — light-beam shine sweep on hover */
+/* Gallery â€” light-beam shine sweep on hover */
 .gallery-item::before {
   content: '';
   position: absolute;
@@ -2584,7 +2668,7 @@ body.dark-mode .fx-spotlight::after {
   left: 130%;
 }
 
-/* Featured event card — flowing gradient border */
+/* Featured event card â€” flowing gradient border */
 .event-banner-card {
   border: 2px solid transparent;
   background:
@@ -2602,7 +2686,7 @@ body.dark-mode .fx-spotlight::after {
   box-shadow: var(--shadow-hover), 0 0 30px rgba(var(--secondary-rgb), 0.25);
 }
 
-/* Event badge — gold shimmer */
+/* Event badge â€” gold shimmer */
 .event-badge {
   background: var(--grad-gold) !important;
   color: #3a2600 !important;
@@ -2614,7 +2698,7 @@ body.dark-mode .fx-spotlight::after {
   50%      { box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.75); }
 }
 
-/* Back-to-top — gradient chip with radar pulse ring */
+/* Back-to-top â€” gradient chip with radar pulse ring */
 .back-to-top {
   background: var(--grad-primary);
 }
@@ -2636,7 +2720,7 @@ body.dark-mode .fx-spotlight::after {
   box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.6);
 }
 
-/* Footer — animated circuit power-rail on top edge */
+/* Footer â€” animated circuit power-rail on top edge */
 .footer {
   position: relative;
   border-top: none;
@@ -2663,7 +2747,7 @@ body.dark-mode .fx-spotlight::after {
   text-shadow: 0 0 14px rgba(var(--glow-rgb), 0.8);
 }
 
-/* Join section — slow aurora drift */
+/* Join section â€” slow aurora drift */
 .join-section::before {
   background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
               radial-gradient(circle at 90% 90%, rgba(var(--glow-rgb), 0.18) 0%, transparent 40%),
@@ -2676,13 +2760,13 @@ body.dark-mode .fx-spotlight::after {
   to   { background-position: 100% 100%; }
 }
 
-/* Form inputs — glow focus ring */
+/* Form inputs â€” glow focus ring */
 .form-control:focus {
   border-color: var(--secondary);
   box-shadow: 0 0 0 3px rgba(var(--secondary-rgb), 0.18), 0 0 14px rgba(var(--secondary-rgb), 0.25);
 }
 
-/* Focus tags — light up on hover */
+/* Focus tags â€” light up on hover */
 .about-focus-tags .tag {
   transition: all var(--transition-fast);
 }
@@ -2694,7 +2778,7 @@ body.dark-mode .fx-spotlight::after {
   box-shadow: 0 6px 16px rgba(var(--secondary-rgb), 0.35);
 }
 
-/* Associate logos — grayscale to full color + glow */
+/* Associate logos â€” grayscale to full color + glow */
 .associate-logo {
   filter: grayscale(35%);
   transition: filter var(--transition-normal), transform var(--transition-normal);
@@ -2704,7 +2788,7 @@ body.dark-mode .fx-spotlight::after {
   transform: scale(1.08);
 }
 
-/* Member role — gold flicker on card hover */
+/* Member role â€” gold flicker on card hover */
 .member-card:hover .member-role {
   color: var(--accent-deep);
   text-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5);
@@ -2727,7 +2811,7 @@ body.dark-mode .fx-spotlight::after {
   to { transform: scale(3); opacity: 0; }
 }
 
-/* Cursor ambient glow (desktop only, injected by effects.js) —
+/* Cursor ambient glow (desktop only, injected by effects.js) â€”
    a soft light that drifts with the pointer; native cursor untouched */
 .fx-cursor-glow {
   position: fixed;
@@ -2752,7 +2836,7 @@ body.dark-mode .fx-cursor-glow {
               transparent 70%);
 }
 
-/* Respect reduced motion — disable decorative animation */
+/* Respect reduced motion â€” disable decorative animation */
 @media (prefers-reduced-motion: reduce) {
   .event-banner-card,
   .footer::before,
@@ -2770,10 +2854,10 @@ body.dark-mode .fx-cursor-glow {
 }
 
 /* ==========================================================================
-   FX LAYER 2 — refinements
+   FX LAYER 2 â€” refinements
    ========================================================================== */
 
-/* Hero headline — slow shimmer across the gradient text */
+/* Hero headline â€” slow shimmer across the gradient text */
 .hero h1 span.chapter-text {
   background-size: 200% auto;
   animation: text-shimmer 6s ease-in-out infinite alternate;
@@ -2783,13 +2867,13 @@ body.dark-mode .fx-cursor-glow {
   to   { background-position: 100% center; }
 }
 
-/* Sticky header — glowing gradient hairline under the glass */
+/* Sticky header â€” glowing gradient hairline under the glass */
 .header.sticky {
   border-bottom: 1px solid transparent;
   border-image: linear-gradient(90deg, transparent, rgba(var(--secondary-rgb), 0.5), transparent) 1;
 }
 
-/* Member & associate cards — same glowing top edge as activity cards */
+/* Member & associate cards â€” same glowing top edge as activity cards */
 .member-card::before,
 .associate-card::before {
   content: '';
@@ -2814,7 +2898,7 @@ body.dark-mode .fx-cursor-glow {
   overflow: hidden;
 }
 
-/* Member photo — soft cyan inner glow on hover */
+/* Member photo â€” soft cyan inner glow on hover */
 .member-image-wrapper::after {
   content: '';
   position: absolute;
@@ -2834,7 +2918,7 @@ body.dark-mode .fx-cursor-glow {
 }
 
 /* ==========================================================================
-   ? DESIGN V2 — "Premium Dark-Glass Circuit"
+   ? DESIGN V2 â€” "Premium Dark-Glass Circuit"
    A classy, editorial redesign layer: display typography, floating glass
    navbar, glassmorphism cards, numbered sections, dot-grid canvas backdrop.
    Overrides earlier rules by cascade; structure untouched.
@@ -2855,7 +2939,7 @@ body.dark-mode {
   --glass-card-border: rgba(53, 228, 255, 0.14);
 }
 
-/* ---- 2. Typography — editorial display headings ---- */
+/* ---- 2. Typography â€” editorial display headings ---- */
 h1, h2, h3, h4,
 .brand-name,
 .member-name,
@@ -2890,25 +2974,34 @@ body.dark-mode {
     top: 14px;
     left: 50%;
     transform: translateX(-50%);
-    width: min(1160px, calc(100% - 40px));
-    height: 66px;
+    width: min(1380px, calc(100% - 24px));
+    height: 72px;
     border-radius: 999px;
-    background-color: var(--glass-bg);
+    background: rgba(234, 242, 249, 0.92);
     backdrop-filter: blur(18px) saturate(1.4);
     -webkit-backdrop-filter: blur(18px) saturate(1.4);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px rgba(var(--primary-deep-rgb), 0.10);
-    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 24px rgba(11, 41, 69, 0.08);
+    padding: 0 16px;
+  }
+
+  .header .container {
+    padding: 0 12px 0 18px;
   }
 
   .header.sticky {
-    height: 62px;
+    height: 68px;
     background-color: var(--navbar-bg);
     border: 1px solid var(--navbar-border);
     border-image: none;
     box-shadow: 0 10px 36px rgba(var(--primary-deep-rgb), 0.16),
                 0 0 20px rgba(var(--secondary-rgb), 0.08);
   }
+}
+
+body.dark-mode .header {
+  background: rgba(11, 28, 51, 0.78);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* ---- 6. Glassmorphism cards ---- */
@@ -2948,7 +3041,7 @@ body.dark-mode .contact-method {
   background-color: var(--glass-card-bg);
 }
 
-/* ---- 9. Reveal upgrade — blur-to-sharp entrance ---- */
+/* ---- 9. Reveal upgrade â€” blur-to-sharp entrance ---- */
 .reveal {
   opacity: 0;
   transform: translateY(34px) scale(0.99);
@@ -2964,7 +3057,7 @@ body.dark-mode .contact-method {
   filter: blur(0);
 }
 
-/* ---- 10. Footer — deep-navy circuit slab in both themes ---- */
+/* ---- 10. Footer â€” deep-navy circuit slab in both themes ---- */
 .footer {
   background: linear-gradient(180deg, #081530 0%, #040b1d 100%);
 }
@@ -2973,7 +3066,7 @@ body.dark-mode .footer {
   background: linear-gradient(180deg, #071228 0%, #030816 100%);
 }
 
-/* ---- 11. Hero badge — glass chip ---- */
+/* ---- 11. Hero badge â€” glass chip ---- */
 .hero-subtitle-badge {
   background-color: var(--glass-bg);
   backdrop-filter: blur(10px);
@@ -3091,4 +3184,348 @@ body.dark-mode .society-card {
   color: var(--primary);
   margin-bottom: 24px;
   letter-spacing: 0.02em;
+}
+
+/* ========================================================================== 
+   Gallery Highlights Carousel
+   ========================================================================== */
+.photo-strip-first {
+  padding-top: calc(var(--nav-height) + 18px);
+  padding-bottom: 56px;
+}
+
+.photo-strip-first + .hero {
+  min-height: calc(100vh - 320px);
+}
+
+.photo-strip .container {
+  max-width: 1500px;
+}
+
+.photo-strip-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.photo-strip .photo-strip-header h3 {
+  margin: 0 0 5px 0;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  letter-spacing: 0;
+}
+
+.photo-strip .photo-strip-header .small.muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+}
+
+.photo-strip-toggle {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 104px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(var(--secondary-rgb), 0.32);
+  box-shadow: 0 10px 28px rgba(var(--primary-rgb), 0.10);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.photo-strip-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(var(--secondary-rgb), 0.20);
+}
+
+.photo-strip-toggle svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 2.5;
+}
+
+body.dark-mode .photo-strip-toggle {
+  color: var(--secondary);
+  background: rgba(12, 31, 66, 0.72);
+  border-color: rgba(var(--glow-rgb), 0.22);
+}
+
+.photo-carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--primary-rgb), 0.10);
+  box-shadow: 0 22px 56px rgba(var(--primary-deep-rgb), 0.16);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.h-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.h-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.h-item {
+  position: relative;
+  flex: 0 0 100%;
+  aspect-ratio: 21 / 8;
+  min-height: 320px;
+  max-height: 560px;
+  overflow: hidden;
+  background: var(--card-bg);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.h-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.01);
+}
+
+.h-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(3, 16, 40, 0.72) 0%, rgba(3, 16, 40, 0.24) 42%, rgba(3, 16, 40, 0.04) 100%),
+              linear-gradient(0deg, rgba(3, 16, 40, 0.46) 0%, transparent 46%);
+  pointer-events: none;
+}
+
+.h-caption {
+  position: absolute;
+  left: clamp(22px, 4vw, 58px);
+  bottom: clamp(22px, 4vw, 52px);
+  z-index: 2;
+  max-width: min(520px, 78%);
+  color: #fff;
+}
+
+.h-caption span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(var(--secondary-rgb), 0.86);
+  color: #042033;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.h-caption h4 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 3.75rem);
+  line-height: 1.02;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);
+}
+
+.photo-carousel-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 48px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(4, 14, 36, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: translateY(-50%);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.photo-carousel-nav:hover {
+  background: rgba(var(--primary-rgb), 0.82);
+  transform: translateY(-50%) scale(1.04);
+}
+
+.photo-carousel-nav svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.2;
+}
+
+.photo-carousel-prev {
+  left: 14px;
+  border-radius: 999px;
+}
+
+.photo-carousel-next {
+  right: 14px;
+  border-radius: 999px;
+}
+
+.photo-carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 4;
+  display: flex;
+  gap: 9px;
+  transform: translateX(-50%);
+}
+
+.photo-carousel-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  transition: width var(--transition-fast), background var(--transition-fast);
+}
+
+.photo-carousel-dot.active {
+  width: 28px;
+  background: var(--secondary);
+  border-color: var(--secondary);
+}
+
+
+@media (max-width: 992px) {
+  .photo-strip-first + .hero {
+    min-height: auto;
+  }
+
+  .h-item {
+    aspect-ratio: 16 / 9;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .photo-strip-first {
+    padding-top: calc(var(--nav-height) + 18px);
+    padding-bottom: 38px;
+  }
+
+  .photo-strip-header {
+    align-items: flex-start;
+  }
+
+  .photo-strip-toggle {
+    min-width: 44px;
+    width: 44px;
+    padding: 0;
+  }
+
+  .photo-strip-toggle span {
+    display: none;
+  }
+
+  .photo-carousel {
+    border-radius: 8px;
+  }
+
+  .h-item {
+    aspect-ratio: 4 / 3;
+    min-height: 240px;
+  }
+
+  .h-caption {
+    left: 18px;
+    right: 18px;
+    bottom: 22px;
+    max-width: none;
+  }
+
+  .h-caption h4 {
+    font-size: clamp(1.55rem, 9vw, 2.35rem);
+  }
+
+  .photo-carousel-nav {
+    width: 38px;
+    height: 48px;
+  }
+
+  .photo-carousel-prev { left: 8px; }
+  .photo-carousel-next { right: 8px; }
+
+  /* Featured Section Responsive */
+  .featured-highlights-wrapper {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .featured-side {
+    min-height: 220px;
+  }
+
+  .featured-center {
+    padding: 28px;
+    order: 2;
+  }
+
+  .featured-left {
+    order: 1;
+  }
+
+  .featured-right {
+    order: 3;
+    padding: 12px;
+  }
+
+  .featured-side-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .featured-title {
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+  }
+
+  .featured-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .featured-desc {
+    font-size: 0.9rem;
+  }
+
+  .featured-meta {
+    gap: 12px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .gallery-grid-item {
+    aspect-ratio: 3 / 2;
+  }
+
+  .gallery-item-content {
+    padding: 12px 10px 8px;
+  }
+
+  .gallery-item-content h4 {
+    font-size: 0.9rem;
+  }
 }

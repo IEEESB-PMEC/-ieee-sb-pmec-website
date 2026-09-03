@@ -1,5 +1,5 @@
 /**
- * IEEE SB PMEC Student Branch Chapter - Main Script
+ * IEEE SB PMEC Student Branch - Main Script
  * Handles responsive interactions, dark mode, animations, and dynamic content.
  */
 
@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initBackToTop();
   initScrollSpy();
+  initPhotoStripAutoScroll();
+  initCommitteeSubnav();
   // initCircuitCanvas();
   // Tilt, magnetic buttons, cursor FX, spotlights & ripples live in effects.js
 
@@ -63,7 +65,7 @@ function initDarkMode() {
   // Event listener
   themeToggleBtn.addEventListener('click', toggleTheme);
 
-  // Check saved preference — default is LIGHT unless user has explicitly chosen dark
+  // Check saved preference â€” default is LIGHT unless user has explicitly chosen dark
   let savedTheme = null;
   try {
     savedTheme = localStorage.getItem('theme');
@@ -81,6 +83,93 @@ function initDarkMode() {
   }
 }
 
+/* ==========================================================================
+   15. Auto-scroll for Horizontal Photo Strip
+   Smoothly advances the `.h-scroll` container and loops back to start.
+   Pauses on hover, touch, or pointer interaction to let users control scrolling.
+   ========================================================================== */
+function initPhotoStripAutoScroll() {
+  const carousel = document.querySelector('.photo-carousel');
+  const strip = document.querySelector('.h-scroll');
+  if (!carousel || !strip) return;
+
+  const slides = Array.from(strip.querySelectorAll('.h-item'));
+  const prevBtn = carousel.querySelector('.photo-carousel-prev');
+  const nextBtn = carousel.querySelector('.photo-carousel-next');
+  const dotsWrap = carousel.querySelector('.photo-carousel-dots');
+  let currentIndex = 0;
+
+  const buildDots = () => {
+    if (!dotsWrap) return [];
+    dotsWrap.innerHTML = '';
+    return slides.map((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'photo-carousel-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Go to gallery highlight ${index + 1}`);
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+  };
+
+  const dots = buildDots();
+
+  const updateDots = () => {
+    dots.forEach((dot, index) => dot.classList.toggle('active', index === currentIndex));
+  };
+
+  const goToSlide = (index) => {
+    if (slides.length === 0) return;
+    currentIndex = (index + slides.length) % slides.length;
+    strip.scrollTo({ left: slides[currentIndex].offsetLeft, behavior: 'smooth' });
+    updateDots();
+  };
+
+  if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+  let scrollSyncTimeout = null;
+  strip.addEventListener('scroll', () => {
+    if (scrollSyncTimeout) window.clearTimeout(scrollSyncTimeout);
+    scrollSyncTimeout = window.setTimeout(() => {
+      const nearest = slides.reduce((best, slide, index) => {
+        const distance = Math.abs(slide.offsetLeft - strip.scrollLeft);
+        return distance < best.distance ? { index, distance } : best;
+      }, { index: currentIndex, distance: Infinity });
+      currentIndex = nearest.index;
+      updateDots();
+    }, 80);
+  }, { passive: true });
+
+  // Auto-scroll functionality
+  let autoScrollInterval = null;
+  const autoScrollDelay = 4000; // 4 seconds between slides
+
+  const startAutoScroll = () => {
+    autoScrollInterval = setInterval(() => {
+      goToSlide(currentIndex + 1);
+    }, autoScrollDelay);
+  };
+
+  const stopAutoScroll = () => {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  };
+
+  // Start auto-scroll
+  startAutoScroll();
+
+  // Pause auto-scroll on hover/interaction
+  carousel.addEventListener('mouseenter', stopAutoScroll);
+  carousel.addEventListener('mouseleave', startAutoScroll);
+  carousel.addEventListener('touchstart', stopAutoScroll, { passive: true });
+  carousel.addEventListener('touchend', startAutoScroll);
+
+  updateDots();
+}
 /* ==========================================================================
    2. Mobile Navigation Hamburger Menu
    ========================================================================== */
@@ -261,44 +350,92 @@ function initScrollAnimations() {
    7. Dynamic Executive Committee Rendering from members.js
    ========================================================================== */
 function renderCommitteeMembers() {
-  const committeeContainer = document.getElementById('committee-members');
+  const stbContainer = document.getElementById('stb-members');
+  const edsContainer = document.getElementById('eds-members');
+  const wieContainer = document.getElementById('wie-members');
   
-  if (!committeeContainer) return;
+  if (!stbContainer && !edsContainer && !wieContainer) return;
 
   if (typeof membersData === 'undefined' || !Array.isArray(membersData)) {
-    committeeContainer.innerHTML = '<p class="error-msg">Committee member data failed to load.</p>';
+    if (stbContainer) stbContainer.innerHTML = '<p class="error-msg">Committee member data failed to load.</p>';
+    if (edsContainer) edsContainer.innerHTML = '<p class="error-msg">Committee member data failed to load.</p>';
+    if (wieContainer) wieContainer.innerHTML = '<p class="error-msg">Committee member data failed to load.</p>';
     return;
   }
 
-  committeeContainer.innerHTML = ''; // Clear container
+  // Clear containers
+  if (stbContainer) stbContainer.innerHTML = '';
+  if (edsContainer) edsContainer.innerHTML = '';
+  if (wieContainer) wieContainer.innerHTML = '';
 
-  membersData.forEach((member, index) => {
-    const card = document.createElement('div');
-    card.className = `member-card reveal delay-${(index % 4) + 1}`;
-    
-    card.innerHTML = `
-      ${member.photo ? `
-      <div class="member-image-wrapper">
-        <img src="${member.photo}" alt="${member.name}" class="member-img">
-        ${member.linkedin ? `
-        <div class="member-linkedin-overlay">
-          <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="member-linkedin-link" aria-label="${member.name} LinkedIn">
-            <i class="fab fa-linkedin"></i>
-          </a>
-        </div>` : ''}
-      </div>` : ''}
-      <div class="member-info">
-        <h3 class="member-name">${member.name}</h3>
-        <p class="member-role">${member.role}</p>
-        ${member.description ? `<p class="member-desc">${member.description}</p>` : ''}
-      </div>
-    `;
-    
-    committeeContainer.appendChild(card);
-  });
+  // Filter and render members by section
+  const stbMembers = membersData.filter(member => member.section === 'STB');
+  const edsMembers = membersData.filter(member => member.section === 'EDS');
+  const wieMembers = membersData.filter(member => member.section === 'WIE');
+
+  // Render STB members
+  if (stbContainer) {
+    if (stbMembers.length === 0) {
+      stbContainer.innerHTML = '<p class="text-center" style="grid-column: 1 / -1; padding: 20px;">No STB members available.</p>';
+    } else {
+      stbMembers.forEach((member, index) => {
+        const card = createMemberCard(member, index);
+        stbContainer.appendChild(card);
+      });
+    }
+  }
+
+  // Render EDS members
+  if (edsContainer) {
+    if (edsMembers.length === 0) {
+      edsContainer.innerHTML = '<p class="text-center" style="grid-column: 1 / -1; padding: 20px;">No EDS members available.</p>';
+    } else {
+      edsMembers.forEach((member, index) => {
+        const card = createMemberCard(member, index);
+        edsContainer.appendChild(card);
+      });
+    }
+  }
+
+  // Render WIE members
+  if (wieContainer) {
+    if (wieMembers.length === 0) {
+      wieContainer.innerHTML = '<p class="text-center" style="grid-column: 1 / -1; padding: 20px;">No WIE members available.</p>';
+    } else {
+      wieMembers.forEach((member, index) => {
+        const card = createMemberCard(member, index);
+        wieContainer.appendChild(card);
+      });
+    }
+  }
 
   // Re-run lazy loading binding for newly added member images
   bindLazyLoading();
+}
+
+function createMemberCard(member, index) {
+  const card = document.createElement('div');
+  card.className = `member-card reveal delay-${(index % 4) + 1}`;
+  
+  card.innerHTML = `
+    ${member.photo ? `
+    <div class="member-image-wrapper">
+      <img src="${member.photo}" alt="${member.name}" class="member-img">
+      ${member.linkedin ? `
+      <div class="member-linkedin-overlay">
+        <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="member-linkedin-link" aria-label="${member.name} LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>` : ''}
+    </div>` : ''}
+    <div class="member-info">
+      <h3 class="member-name">${member.name}</h3>
+      <p class="member-role">${member.role}</p>
+      ${member.description ? `<p class="member-desc">${member.description}</p>` : ''}
+    </div>
+  `;
+  
+  return card;
 }
 
 /* ==========================================================================
@@ -442,7 +579,7 @@ function initGalleryLightbox() {
     if (e.key === 'ArrowLeft') showPrev();
   });
 
-  // --- Swipe navigation (touch) — swipe left = next, swipe right = prev ---
+  // --- Swipe navigation (touch) â€” swipe left = next, swipe right = prev ---
   const SWIPE_MIN = 45; // px of horizontal travel to count as a swipe
   let touchStartX = 0;
   let touchStartY = 0;
@@ -659,9 +796,64 @@ function initGalleryCarousel() {
 }
 
 /* ==========================================================================
+   16. Committee Sub-navigation
+   ========================================================================== */
+function initCommitteeSubnav() {
+  const subnavLinks = document.querySelectorAll('.subnav-link');
+  const subsections = document.querySelectorAll('.committee-subsection');
+  
+  if (subnavLinks.length === 0 || subsections.length === 0) return;
+
+  // Handle click events for smooth scrolling
+  subnavLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const targetSection = document.getElementById(targetId);
+      
+      if (targetSection) {
+        const offset = 100; // Offset for sticky header
+        const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update active state
+        subnavLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // Update active state on scroll
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '-100px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.id;
+        subnavLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  subsections.forEach(section => observer.observe(section));
+}
+
+/* ==========================================================================
    14. Interactive Circuit-Board Canvas (Hero Background)
    Nodes wired like a PCB, with data pulses travelling the traces and a
-   mouse-reactive "chip" field — echoing the Edge-AI Hackathon brochure.
+   mouse-reactive "chip" field â€” echoing the Edge-AI Hackathon brochure.
    ========================================================================== */
 function initCircuitCanvas() {
   const canvas = document.getElementById('circuit-canvas');
@@ -740,7 +932,7 @@ function initCircuitCanvas() {
       if (n.x < 0 || n.x > width) n.vx *= -1;
       if (n.y < 0 || n.y > height) n.vy *= -1;
 
-      // Mouse repulsion — the field "parts" around the cursor
+      // Mouse repulsion â€” the field "parts" around the cursor
       if (mouse.active) {
         const dx = n.x - mouse.x;
         const dy = n.y - mouse.y;
@@ -780,7 +972,7 @@ function initCircuitCanvas() {
       ctx.fill();
     }
 
-    // Glow around the cursor — the "chip"
+    // Glow around the cursor â€” the "chip"
     if (mouse.active) {
       const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 110);
       g.addColorStop(0, hexToRgba(colors.glow, 0.16));
@@ -840,7 +1032,7 @@ function initCircuitCanvas() {
   resize();
 
   if (prefersReduced) {
-    // Static single frame — no animation loop or pulses
+    // Static single frame â€” no animation loop or pulses
     draw();
     cancelAnimationFrame(animId);
   } else {
