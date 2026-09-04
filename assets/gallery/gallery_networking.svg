@@ -62,5 +62,5 @@
   <!-- Typography -->
   <text x="400" y="450" text-anchor="middle" font-family="'Poppins', sans-serif" font-size="28" font-weight="bold" fill="#FFFFFF" letter-spacing="1">NETWORKING &amp; COLLABORATION</text>
   <text x="400" y="490" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" fill="#00B4D8" font-weight="500">IEEE Members &amp; Industry Connect</text>
-  <text x="400" y="525" text-anchor="middle" font-family="'Inter', sans-serif" font-size="14" fill="#9CA3AF" opacity="0.8">PMEC Student Branch Chapter</text>
+  <text x="400" y="525" text-anchor="middle" font-family="'Inter', sans-serif" font-size="14" fill="#9CA3AF" opacity="0.8">PMEC Student Branch</text>
 </svg>

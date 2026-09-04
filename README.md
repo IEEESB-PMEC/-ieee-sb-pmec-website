@@ -1,3 +1,3 @@
-﻿# IEEE SB PMEC Student Branch Chapter Website
+# IEEE SB PMEC Student Branch Website
 
-Welcome to the official repository for the **IEEE Student Branch PMEC (EDS) Student Branch Chapter** website at **Parala Maharaja Engineering College (PMEC), Berhampur**.    
+Welcome to the official repository for the **IEEE Student Branch PMEC ** website at **Parala Maharaja Engineering College (PMEC), Berhampur**.
