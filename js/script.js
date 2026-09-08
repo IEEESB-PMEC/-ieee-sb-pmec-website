@@ -421,12 +421,20 @@ function createMemberCard(member, index) {
     ${member.photo ? `
     <div class="member-image-wrapper">
       <img src="${member.photo}" alt="${member.name}" class="member-img">
-      ${member.linkedin ? `
-      <div class="member-linkedin-overlay">
-        <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="member-linkedin-link" aria-label="${member.name} LinkedIn">
+      <div class="member-social-overlay">
+        ${member.linkedin ? `
+        <a href="${member.linkedin}" target="_blank" rel="noopener noreferrer" class="member-social-link" aria-label="${member.name} LinkedIn">
           <i class="fab fa-linkedin"></i>
-        </a>
-      </div>` : ''}
+        </a>` : ''}
+        ${member.personal ? `
+        <a href="${member.personal}" target="_blank" rel="noopener noreferrer" class="member-social-link" aria-label="${member.name} Personal Website">
+          <i class="fas fa-globe"></i>
+        </a>` : ''}
+        ${member.email ? `
+        <a href="mailto:${member.email}" class="member-social-link" aria-label="${member.name} Email">
+          <i class="fas fa-envelope"></i>
+        </a>` : ''}
+      </div>
     </div>` : ''}
     <div class="member-info">
       <h3 class="member-name">${member.name}</h3>

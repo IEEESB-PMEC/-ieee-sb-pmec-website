@@ -1080,7 +1080,7 @@ body.dark-mode .subnav-link.active {
   transform: scale(1.08);
 }
 
-.member-linkedin-overlay {
+.member-social-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -1096,8 +1096,32 @@ body.dark-mode .subnav-link.active {
   backdrop-filter: blur(4px);
 }
 
-.member-card:hover .member-linkedin-overlay {
+.member-card:hover .member-social-overlay {
   opacity: 1;
+}
+
+.member-social-link {
+  width: 44px;
+  height: 44px;
+  background-color: var(--white);
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  transform: translateY(20px);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+.member-card:hover .member-social-link {
+  transform: translateY(0);
+}
+
+.member-social-link:hover {
+  background-color: var(--secondary);
+  color: var(--white);
 }
 
 .member-linkedin-link {
