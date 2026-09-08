@@ -58,4 +58,28 @@ const membersData = [
     "linkedin": "https://www.linkedin.com/in/ramyaranjan-das-1b96a53a3",
     "section": "STB"
   },
+  {
+    "name": "Dr. Raghunandan Swain",
+    "role": "Faculty Advisor",
+    "photo": "assets/committi_members/faculty_advisor.jpeg",
+    "linkedin": "https://www.linkedin.com/in/raghunandan-swain-ph-d-6a806525/",
+    "personal": "https://sites.google.com/site/drraghunandanswain/",
+    "email": "raghu.etc@pmec.ac.in",
+    "section": "EDS"
+  },
+  {
+    "name": "Dr. Suryalok Dash",
+    "role": "Branch Counselor",
+    "photo": "assets/committi_members/branch_counselor.png",
+    "linkedin": "https://www.linkedin.com/in/suryalok-dash-ph-d-14942637/",
+    "email": "suryalok.dash@gmail.com",
+    "section": "EDS"
+  },
+  {
+    "name": "Spandana Behera",
+    "role": "Chairperson",
+    "photo": "assets/committi_members/chair_person.png",
+    "linkedin": "https://www.linkedin.com/in/spandana-behera",
+    "section": "EDS"
+  },
   ];
